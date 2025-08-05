@@ -1,6 +1,9 @@
 #ifdef HASHTABLE_H_API
 #endif
 #define MAX_VALUE_NAME 256
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 typedef struct TableItem{
     char cName[MAX_VALUE_NAME];
@@ -17,7 +20,8 @@ enum xOptions{
     CONCLUIR = 3,
     LIMPAR = 4,
     CRIAR = 5,
-    IMPRIMIR = 6
+    IMPRIMIR = 6,
+    INICIAR = 9,
 };
 
 int iHashFunction(pTableItem pItem, int iSize);

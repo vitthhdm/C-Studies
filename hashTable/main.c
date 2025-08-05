@@ -1,15 +1,12 @@
 #include "hashTable.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 int main(){    
-    int iSize;
-    pTableItem pItem;
+    int iSize = 0;
+    pTableItem pItem = NULL;
     pTableItem pNewHashTable = NULL; 
-    int iOpcao;
+    int iOpcao = INICIAR;
     while(iOpcao != CONCLUIR){
-        printf("Digite uma opcao:\n1 - INSERIR DADO NA TABELA\t\n2 - EXCLUIR TABELA INTEIRA\t\n3 - FINALIZAR PROGRAMA\t\n4 - RETIRAR  ELEMENTO DA TABELA\t\n5 - CRIAR TABELA\t\n6 - IMPRIMIR TABELA\n");
+        printf("\nDigite uma opcao:\n1 - INSERIR DADO NA TABELA\t\n2 - EXCLUIR TABELA INTEIRA\t\n3 - FINALIZAR PROGRAMA\t\n4 - RETIRAR  ELEMENTO DA TABELA\t\n5 - CRIAR TABELA\t\n6 - IMPRIMIR TABELA\n");
         scanf("%d", &iOpcao);
         getchar();
         if (iOpcao == INSERIR){

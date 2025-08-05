@@ -1,8 +1,5 @@
 #define HASHTABLE_H_API
-#include <stdio.h>
-#include <stdlib.h>
 #include "hashTable.h"
-#include <string.h>
 
 float fCheckAvailability = 0;
 
@@ -115,6 +112,20 @@ void vDeleteKey(pTableItem pHashFunction, char *cKey, int iSize){
     strcpy(pItemSearch->cCpf , cKey);
     int iValue = iHashFunction(pItemSearch, iSize);
     pTableItem pHashAux = pHashFunction;
+    if(strcmp(pHashAux[iValue].cCpf, cKey) == 0){
+        free(pItemSearch);
+        if (pHashAux[iValue].pNext){
+            pItemSearch = pHashAux[iValue].pNext;
+            pHashAux[iValue] = *pHashAux[iValue].pNext;
+            free(pItemSearch);
+            return;
+        }
+        fCheckAvailability--;
+        pHashAux[iValue].cName[0] = '\0';
+        pHashAux[iValue].iAge = 0; 
+        pHashAux[iValue].cCpf[0] = '\0';
+        pHashAux[iValue].pNext = NULL;
+    }
     while(pHashAux[iValue].pNext){
         if (strcmp(pHashAux[iValue].pNext->cCpf, cKey) == 0){
             pTableItem pAux = pHashAux[iValue].pNext;
@@ -125,13 +136,6 @@ void vDeleteKey(pTableItem pHashFunction, char *cKey, int iSize){
             return;
         }
         pHashAux[iValue].pNext = pHashAux[iValue].pNext->pNext;
-    }
-    if(strcmp(pHashAux[iValue].cCpf, cKey) == 0){
-        fCheckAvailability--;
-        pHashAux[iValue].cName[0] = '\0';
-        pHashAux[iValue].iAge = 0; 
-        pHashAux[iValue].cCpf[0] = '\0';
-        pHashAux[iValue].pNext = NULL;
     }
     return;
 }
@@ -149,6 +153,7 @@ pTableItem pRehashing(pTableItem pHashTable, int *iSize){
 
     if (*iSize != iNewSize){
         pTableItem pTableRehashed = pGeraHashTable(iNewSize);
+        fCheckAvailability = 0;
         for (int i = 0; i < (*iSize); i++) {
             pTableItem pAux = &pHashTable[i];
             if (pAux->iAge != 0) {
